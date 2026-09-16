@@ -1,0 +1,26 @@
+{
+  "name": "@anil-bd/scraper-types",
+  "version": "0.1.0",
+  "description": "TypeScript types for Bright Data scrapers, generated from the scraper catalog.",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "types/"
+  ],
+  "keywords": [
+    "bright-data",
+    "web-scraping",
+    "types",
+    "typescript"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anilkk/brightdata-scraper-types.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
