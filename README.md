@@ -75,6 +75,35 @@ checks/wrong-field.ts(8,14): error TS2339:
   Property 'prodcut_title' does not exist on type 'AmazonProductsOutput'.
 ```
 
+## The one end-to-end example
+
+`examples/demo/src/run.ts` resolves a URL to a scraper, builds a typed payload,
+triggers the scrape, polls the snapshot and prints typed rows. It runs without a
+token, in which case it prints the request instead of sending it.
+
+```
+$ npx tsx src/run.ts
+scraper : Amazon products
+id      : gd_l7q7dkf244hwjntr0
+methods : collect_by_url, discover_by_keyword, discover_by_category_url, ...
+target  : https://www.amazon.com/dp/B0CHX1W1XY
+
+BRIGHTDATA_API_TOKEN is not set, so this is a dry run.
+
+POST https://api.brightdata.com/datasets/v3/trigger?dataset_id=gd_l7q7dkf244hwjntr0&include_errors=true
+[ { "url": "https://www.amazon.com/dp/B0CHX1W1XY" } ]
+```
+
+Set `BRIGHTDATA_API_TOKEN` and it runs for real. Pass any other URL and
+`byDomain()` still resolves it:
+
+```
+$ npx tsx src/run.ts https://github.com/anthropics/claude-code
+scraper : Github repository
+id      : gd_lyrexgxc24b3d4imjt
+This example only sends requests for amazon-products. Resolved github-repository, stopping here.
+```
+
 ## Run it
 
 ```bash
@@ -83,6 +112,7 @@ cd examples/demo && npm install
 npx tsc --noEmit -p .                           # types compile
 node ../../tools/completions-test.js            # autocomplete assertions
 ../../tools/error-check.sh                      # bad field is rejected
+npx tsx src/run.ts                              # end-to-end example, dry run
 ```
 
 `catalog-sample.json` holds the 12 scrapers used here. Point the generator at the
