@@ -49,7 +49,13 @@ function probe(source) {
   const ls = service([PROBE]);
   const completions = ls.getCompletionsAtPosition(PROBE, pos, {}) || { entries: [] };
   const quickInfo = ls.getQuickInfoAtPosition(PROBE, pos - 1);
-  fs.unlinkSync(PROBE);
+  // Some sandboxes refuse unlink inside a mounted folder. Blanking the file
+  // is just as good, and leaves nothing for tsc to complain about.
+  try {
+    fs.unlinkSync(PROBE);
+  } catch {
+    fs.writeFileSync(PROBE, 'export {};\n');
+  }
   return {
     entries: completions.entries.map((e) => e.name),
     quickInfo: quickInfo
