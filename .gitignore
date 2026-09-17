@@ -2,3 +2,4 @@ node_modules/
 *.tgz
 __pycache__/
 api-response.json
+examples/demo/src/__probe.ts
